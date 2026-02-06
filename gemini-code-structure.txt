@@ -1,0 +1,20 @@
+index.html
+├── <head>
+│   ├── Tailwind CSS CDN & Google Fonts
+│   ├── Font Awesome Icons CDN
+│   └── Pinyin-Pro JS CDN
+├── <body>
+│   ├── Header (App branding, API key trigger, History drawer button, Theme toggle)
+│   ├── Main Translator Workspace
+│   │   ├── Source Input Box + Preset Pills (Swedish defaults)
+│   │   └── Dual Output Columns (Target Language 1 & Target Language 2)
+│   ├── Modals & Drawers
+│   │   ├── API Key Setup Modal
+│   │   └── Translation History Sidebar Drawer
+│   └── <script> (Core Application Engine)
+│       ├── State Management (API key, theme, font size, debounce timers)
+│       ├── Gemini API Fetch & JSON Schema Parser
+│       ├── Audio Player (SpeechSynthesis)
+│       ├── Pinyin Converter Engine
+│       ├── History Persistence (localStorage)
+│       └── File Exporter (.txt & .json)
