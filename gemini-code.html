@@ -83,86 +83,72 @@
         </div>
 
         <!-- Translator Grid -->
-      <div class="flex flex-col gap-6 flex-1">
-    
-		<!-- Top: Source Panel (Full Width) -->
-		<div class="flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden h-64">
-			<div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
-				<div class="flex items-center space-x-2">
-					<span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-					<select id="source-lang" class="bg-transparent font-semibold text-sm focus:outline-none cursor-pointer">
-						<option value="Swedish">Swedish (Svenska)</option>
-						<option value="English">English</option>
-						<option value="Spanish">Spanish</option>
-					</select>
-				</div>
-				<div class="flex items-center space-x-1">
-					<button onclick="pasteText()" title="Paste from clipboard" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded transition"><i class="fa-solid fa-paste"></i></button>
-					<button onclick="clearSource()" title="Clear text" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded transition"><i class="fa-solid fa-trash-can"></i></button>
-				</div>
-			</div>
-			<div class="flex-1 p-4 flex flex-col">
-				<textarea id="source-text" placeholder="Type or paste source text here..." class="w-full flex-1 bg-transparent resize-none focus:outline-none text-slate-800 dark:text-slate-200 placeholder-slate-400 text-base"></textarea>
-				<div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-400">
-					<span id="char-count">0 characters</span>
-					<button id="translate-btn" onclick="handleTranslate()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl shadow-lg shadow-indigo-600/20 transition flex items-center space-x-2">
-						<span>Translate</span><i class="fa-solid fa-arrow-right"></i>
-					</button>
-				</div>
-			</div>
-		</div>
-
-		<!-- Bottom Row: Target Panels (Side-by-Side) -->
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
+		<div class="flex flex-col gap-6 flex-1">
 			
-			<!-- Target 1 Panel (English) -->
-			<div class="flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden min-h-[220px]">
+			<!-- Top: Panel 1 (Full Width Input/Output) -->
+			<div class="flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden h-48">
 				<div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
 					<div class="flex items-center space-x-2">
-						<span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-						<select id="target-lang-1" class="bg-transparent font-semibold text-sm focus:outline-none cursor-pointer">
-							<option value="English">English</option>
-							<option value="Swedish">Swedish</option>
-							<option value="Spanish">Spanish</option>
+						<span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+						<select id="lang-1" class="bg-transparent font-semibold text-sm focus:outline-none cursor-pointer">
+							<option value="en" selected>Swedish</option>
+							<option value="sv">English</option>
+							<option value="zh">Chinese</option>
 						</select>
 					</div>
 					<div class="flex items-center space-x-1">
-						<button onclick="speakText('target-1-text', 'en-US')" title="Listen" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded transition"><i class="fa-solid fa-volume-high"></i></button>
-						<button onclick="copyText('target-1-text')" title="Copy" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded transition"><i class="fa-solid fa-copy"></i></button>
+						<button onclick="document.getElementById('text-1').value=''; translateFrom(1);" title="Clear text" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded transition"><i class="fa-solid fa-trash-can"></i></button>
 					</div>
 				</div>
 				<div class="flex-1 p-4 flex flex-col">
-					<div id="target-1-text" class="w-full flex-1 text-slate-800 dark:text-slate-200 placeholder-slate-400 text-base select-all whitespace-pre-wrap overflow-y-auto">Translation 1 will appear here...</div>
+					<textarea id="text-1" placeholder="Type here in any language..." class="w-full flex-1 bg-transparent resize-none focus:outline-none text-slate-800 dark:text-slate-200 placeholder-slate-400 text-base"></textarea>
 				</div>
 			</div>
 
-			<!-- Target 2 Panel (Chinese) -->
-			<div class="flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden min-h-[220px]">
-				<div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
-					<div class="flex items-center space-x-2">
-						<span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-						<select id="target-lang-2" class="bg-transparent font-semibold text-sm focus:outline-none cursor-pointer">
-							<option value="Chinese (Simplified)">Chinese (Simplified)</option>
-							<option value="English">English</option>
-							<option value="Japanese">Japanese</option>
-						</select>
+			<!-- Bottom Row: Panel 2 & Panel 3 (Side-by-Side Input/Output) -->
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
+				
+				<!-- Panel 2 -->
+				<div class="flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden h-48">
+					<div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
+						<div class="flex items-center space-x-2">
+							<span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+							<select id="lang-2" class="bg-transparent font-semibold text-sm focus:outline-none cursor-pointer">
+								<option value="sv" selected>English</option>
+								<option value="en">Swedish</option>
+								<option value="zh">Chinese</option>
+							</select>
+						</div>
+						<div class="flex items-center space-x-1">
+							<button onclick="document.getElementById('text-2').value=''; translateFrom(2);" title="Clear text" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded transition"><i class="fa-solid fa-trash-can"></i></button>
+						</div>
 					</div>
-					<div class="flex items-center space-x-1">
-						<button onclick="speakText('target-2-text', 'zh-CN')" title="Listen" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded transition"><i class="fa-solid fa-volume-high"></i></button>
-						<button onclick="copyText('target-2-text')" title="Copy" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded transition"><i class="fa-solid fa-copy"></i></button>
+					<div class="flex-1 p-4 flex flex-col">
+						<textarea id="text-2" placeholder="Translation 2..." class="w-full flex-1 bg-transparent resize-none focus:outline-none text-slate-800 dark:text-slate-200 placeholder-slate-400 text-base"></textarea>
 					</div>
 				</div>
-				<div class="flex-1 p-4 flex flex-col">
-					<div id="target-2-text" class="w-full flex-1 text-slate-800 dark:text-slate-200 placeholder-slate-400 text-base select-all whitespace-pre-wrap overflow-y-auto">Translation 2 will appear here...</div>
-					<div id="pinyin-container" class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs text-indigo-500 dark:text-indigo-400 hidden">
-						<span class="font-semibold block mb-0.5">Pinyin Pronunciation:</span>
-						<span id="pinyin-text"></span>
+
+				<!-- Panel 3 -->
+				<div class="flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden h-48">
+					<div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
+						<div class="flex items-center space-x-2">
+							<span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+							<select id="lang-3" class="bg-transparent font-semibold text-sm focus:outline-none cursor-pointer">
+								<option value="zh" selected>Chinese</option>
+								<option value="en">English</option>
+								<option value="sv">Swedish</option>
+							</select>
+						</div>
+						<div class="flex items-center space-x-1">
+							<button onclick="document.getElementById('text-3').value=''; translateFrom(3);" title="Clear text" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded transition"><i class="fa-solid fa-trash-can"></i></button>
+						</div>
+					</div>
+					<div class="flex-1 p-4 flex flex-col">
+						<textarea id="text-3" placeholder="Translation 3..." class="w-full flex-1 bg-transparent resize-none focus:outline-none text-slate-800 dark:text-slate-200 placeholder-slate-400 text-base"></textarea>
 					</div>
 				</div>
 			</div>
-
 		</div>
-	</div>
     </main>
 
     <!-- Footer -->
@@ -208,7 +194,68 @@
         let translationHistory = JSON.parse(localStorage.getItem('translation_history')) || [];
 		// Variable to hold our typing timeout
 		let autoTranslateTimer;
+		// Local dictionary for technical terms
+		const techDictionary = {
+			"debounce": { "sv": "studsa av / debounce", "zh": "防抖" },
+			"throttle": { "sv": "strypa / throttle", "zh": "节流" },
+			"api": { "sv": "API", "zh": "API" }
+		};
 
+		let translationTimer;
+
+		async function translateFrom(sourceIndex) {
+			const sourceText = document.getElementById(`text-${sourceIndex}`).value.trim();
+			const sourceLang = document.getElementById(`lang-${sourceIndex}`).value;
+
+			const targets = [1, 2, 3].filter(i => i !== sourceIndex);
+
+			if (!sourceText) {
+				targets.forEach(i => document.getElementById(`text-${i}`).value = '');
+				return;
+			}
+
+			targets.forEach(i => document.getElementById(`text-${i}`).value = 'Translating...');
+
+			for (let targetIndex of targets) {
+				const targetLang = document.getElementById(`lang-${targetIndex}`).value;
+				
+				// 1. Check local tech dictionary first
+				const lowerText = sourceText.toLowerCase();
+				if (techDictionary[lowerText] && techDictionary[lowerText][targetLang]) {
+					document.getElementById(`text-${targetIndex}`).value = techDictionary[lowerText][targetLang];
+					continue;
+				}
+
+				// 2. Call MyMemory API
+				try {
+					const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(sourceText)}&langpair=${sourceLang}|${targetLang}`);
+					const data = await res.json();
+					document.getElementById(`text-${targetIndex}`).value = data.responseData.translatedText || 'Translation failed';
+				} catch (err) {
+					console.error(err);
+					document.getElementById(`text-${targetIndex}`).value = 'Error';
+				}
+			}
+		}
+
+		// Attach event listeners to all 3 panels for live typing
+		[1, 2, 3].forEach(index => {
+			const textArea = document.getElementById(`text-${index}`);
+			
+			textArea.addEventListener('input', () => {
+				clearTimeout(translationTimer);
+				translationTimer = setTimeout(() => {
+					translateFrom(index);
+				}, 600); // 600ms debounce timer
+			});
+
+			// Re-translate if dropdown language changes
+			document.getElementById(`lang-${index}`).addEventListener('change', () => {
+				if (textArea.value.trim()) {
+					translateFrom(index);
+				}
+			});
+		});
 		// 1. Listen for typing in the source text box
 		document.getElementById('source-text').addEventListener('input', () => {
 			clearTimeout(autoTranslateTimer); // Reset the timer on every new keystroke
